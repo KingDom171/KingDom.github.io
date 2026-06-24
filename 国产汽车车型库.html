@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>国产车型库</title>
+<style>
+.container { width: 500px; margin: 0 auto; border: 2px solid #333; padding: 20px; text-align: center; }
+.car-item { margin: 10px 0; padding: 10px; border: 1px solid #ccc; text-align: left; }
+.star-car { color: red; font-weight: bold; }
+button { margin: 5px; padding: 5px 10px; }
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>国产车型对象</h1>
+    <div id="carWrap"></div>
+    <button onclick="addCar()">添加车型</button>
+</div>
+
+<script>
+let carList = [
+    { title: "仰望U8", content: "四轮独立电机，原地掉头、应急浮水，硬派越野", star: true },
+    { title: "比亚迪汉EV", content: "中大型纯电轿车，续航最高715km，家用旗舰", star: false }
+];
+
+function renderCar() {
+    let html = "";
+    for(let i = 0; i < carList.length; i++) {
+        let item = carList[i];
+        let cls = item.star ? "star-car" : "";
+        html += `<div class="car-item">
+            <h3 class="${cls}">${item.title}</h3>
+            <p>${item.content}</p>
+            <button onclick="toggleStar(${i})">切换重点车型</button>
+        </div>`;
+    }
+    document.getElementById("carWrap").innerHTML = html;
+}
+
+function toggleStar(index) {
+    carList[index].star = !carList[index].star;
+    renderCar();
+}
+
+function addCar() {
+    let title = prompt("输入车型名称：");
+    let content = prompt("输入车型参数介绍：");
+    carList.push({ title, content, star: false });
+    renderCar();
+}
+renderCar();
+</script>
+</body>
+</html>
