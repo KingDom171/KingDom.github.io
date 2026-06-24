@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>数码产品库</title>
+<style>
+.container { width: 500px; margin: 0 auto; border: 2px solid #333; padding: 20px; text-align: center; }
+.digital-item { margin: 10px 0; padding: 10px; border: 1px solid #ccc; text-align: left; }
+.hot-item { color: red; font-weight: bold; }
+button { margin: 5px; padding: 5px 10px; }
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>数码产品对象</h1>
+    <div id="digitalBox"></div>
+    <button onclick="addDigital()">添加数码设备</button>
+</div>
+
+<script>
+let digitalList = [
+    { title: "华为Mate70 Pro", content: "国产麒麟芯片，卫星通话，鸿蒙系统", hot: true },
+    { title: "小米SU7车载平板", content: "车载中控大屏，车机互联，高清触控", hot: false }
+];
+
+function showDigital() {
+    let html = "";
+    for(let i = 0; i < digitalList.length; i++) {
+        let item = digitalList[i];
+        let cls = item.hot ? "hot-item" : "";
+        html += `<div class="digital-item">
+            <h3 class="${cls}">${item.title}</h3>
+            <p>${item.content}</p>
+            <button onclick="toggleHot(${i})">切换热门标记</button>
+        </div>`;
+    }
+    document.getElementById("digitalBox").innerHTML = html;
+}
+
+function toggleHot(index) {
+    digitalList[index].hot = !digitalList[index].hot;
+    showDigital();
+}
+
+function addDigital() {
+    let title = prompt("设备名称：");
+    let content = prompt("设备功能描述：");
+    digitalList.push({ title, content, hot: false });
+    showDigital();
+}
+showDigital();
+</script>
+</body>
+</html>
