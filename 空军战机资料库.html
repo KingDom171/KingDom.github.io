@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>战机资料库</title>
+<style>
+.container { width: 540px; margin: 0 auto; border: 2px solid #222; padding: 20px; text-align: center; }
+.plane-card { margin: 10px 0; padding: 10px; border: 1px solid #aaa; text-align: left; }
+.vip-plane { color: darkred; font-weight: bold; }
+button { padding: 4px 10px; margin: 4px; }
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>军用战机对象</h1>
+    <div id="planeBox"></div>
+    <button onclick="addPlane()">添加战机</button>
+</div>
+
+<script>
+let planeData = [
+    { name: "歼-20隐身战机", param: "隐身五代机，最大速度2.8马赫，内置弹舱", star: true },
+    { name: "运-20大型运输机", param: "最大载重66吨，远程战略投送", star: false }
+];
+
+function drawPlane() {
+    let html = "";
+    for(let i=0; i<planeData.length; i++){
+        let p = planeData[i];
+        let cls = p.star ? "vip-plane" : "";
+        html += `<div class="plane-card">
+            <h3 class="${cls}">${p.name}</h3>
+            <p>参数：${p.param}</p>
+            <button onclick="toggleStar(${i})">切换重点机型</button>
+        </div>`;
+    }
+    document.getElementById("planeBox").innerHTML = html;
+}
+
+function toggleStar(i) {
+    planeData[i].star = !planeData[i].star;
+    drawPlane();
+}
+
+function addPlane() {
+    let planeName = prompt("战机型号：");
+    let planeInfo = prompt("战机性能参数：");
+    planeData.push({name: planeName, param: planeInfo, star: false});
+    drawPlane();
+}
+
+drawPlane();
+</script>
+</body>
+</html>
