@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>海军舰艇库</title>
+<style>
+.wrap { width: 550px; margin: 20px auto; border: 2px solid #004477; padding: 20px; text-align: center; }
+.ship-item { margin: 12px 0; padding: 12px; border: 1px solid #99bbd1; text-align: left; }
+.flagship { color: #c00; font-weight: bold; }
+button { padding: 5px 12px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+    <h1>海军舰艇清单</h1>
+    <div id="shipList"></div>
+    <button onclick="addShip()">新增舰艇</button>
+</div>
+
+<script>
+let ships = [
+    { shipName: "福建舰航母", feature: "电磁弹射，8万余吨常规动力航母", flagship: true },
+    { shipName: "055万吨大驱", feature: "112单元垂发，远洋区域防空", flagship: false }
+];
+
+function renderShip() {
+    let htmlText = "";
+    for(let i=0; i<ships.length; i++){
+        let s = ships[i];
+        let styleCls = s.flagship ? "flagship" : "";
+        htmlText += `<div class="ship-item">
+            <h3 class="${styleCls}">${s.shipName}</h3>
+            <p>舰船特点：${s.feature}</p>
+            <button onclick="changeFlag(${i})">切换旗舰标记</button>
+        </div>`;
+    }
+    document.getElementById("shipList").innerHTML = htmlText;
+}
+
+function changeFlag(index) {
+    ships[index].flagship = !ships[index].flagship;
+    renderShip();
+}
+
+function addShip() {
+    let sName = prompt("舰艇名称/舷号：");
+    let sDesc = prompt("舰艇功能、吨位描述：");
+    ships.push({shipName: sName, feature: sDesc, flagship: false});
+    renderShip();
+}
+
+renderShip();
+</script>
+</body>
+</html>
