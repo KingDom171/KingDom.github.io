@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>航天火箭库</title>
+<style>
+.container { width: 500px; margin: 0 auto; border: 2px solid #333; padding: 20px; text-align: center; }
+.rocket-item { margin: 10px 0; padding: 10px; border: 1px solid #ccc; text-align: left; }
+.core-rocket { color: red; font-weight: bold; }
+button { margin: 5px; padding: 5px 10px; }
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>运载火箭对象</h1>
+    <div id="rocketBox"></div>
+    <button onclick="addRocket()">添加火箭</button>
+</div>
+
+<script>
+let rockets = [
+    { title: "长征五号", content: "近地轨道运力25吨，重型运载火箭", core: true },
+    { title: "长征二号F", content: "载人航天专用火箭，高安全冗余", core: false }
+];
+
+function showRockets() {
+    let html = "";
+    for(let i=0; i<rockets.length; i++){
+        let r = rockets[i];
+        let cls = r.core ? "core-rocket" : "";
+        html += `<div class="rocket-item">
+            <h3 class="${cls}">${r.title}</h3>
+            <p>${r.content}</p>
+            <button onclick="toggleCore(${i})">切换核心型号</button>
+        </div>`;
+    }
+    document.getElementById("rocketBox").innerHTML = html;
+}
+
+function toggleCore(index) {
+    rockets[index].core = !rockets[index].core;
+    showRockets();
+}
+
+function addRocket() {
+    let name = prompt("新火箭名称：");
+    let desc = prompt("火箭参数描述：");
+    rockets.push({title: name, content: desc, core: false});
+    showRockets();
+}
+showRockets();
+</script>
+</body>
+</html>
