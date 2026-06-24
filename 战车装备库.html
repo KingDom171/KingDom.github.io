@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>战车装备库</title>
+<style>
+.container { width: 520px; margin: 0 auto; border: 2px solid #333; padding: 20px; text-align: center; }
+.car-item { margin: 10px 0; padding: 12px; border: 1px solid #ccc; text-align: left; }
+.key-unit { color: red; font-weight: bold; }
+button { margin: 5px; padding: 5px 10px; }
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>装甲战车对象</h1>
+    <div id="cars"></div>
+    <button onclick="addCar()">新增战车</button>
+</div>
+
+<script>
+// 战车数据源
+let carList = [
+    { title: "99A主战坦克", desc: "125mm主炮，55吨，最大时速70km/h", key: true },
+    { title: "04A步战车", desc: "30mm机关炮，水上浮渡，搭载7名步兵", key: false }
+];
+
+// 渲染全部战车
+function renderCars() {
+    let htmlStr = "";
+    for(let i=0; i<carList.length; i++){
+        let item = carList[i];
+        let cssClass = item.key ? "key-unit" : "";
+        htmlStr += `<div class="car-item">
+            <h3 class="${cssClass}">${item.title}</h3>
+            <p>${item.desc}</p>
+            <button onclick="switchKey(${i})">切换核心装备</button>
+        </div>`;
+    }
+    document.getElementById("cars").innerHTML = htmlStr;
+}
+
+// 切换是否核心装备
+function switchKey(idx) {
+    carList[idx].key = !carList[idx].key;
+    renderCars();
+}
+
+// 新增战车
+function addCar() {
+    let name = prompt("输入战车型号：");
+    let info = prompt("输入战车参数描述：");
+    carList.push({title: name, desc: info, key: false});
+    renderCars();
+}
+
+// 页面初始化渲染
+renderCars();
+</script>
+</body>
+</html>
