@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>科研仪器库</title>
+<style>
+.container { width: 500px; margin: 0 auto; border: 2px solid #333; padding: 20px; text-align: center; }
+.device-item { margin: 10px 0; padding: 10px; border: 1px solid #ccc; text-align: left; }
+.core-device { color: red; font-weight: bold; }
+button { margin: 5px; padding: 5px 10px; }
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>大型科研仪器</h1>
+    <div id="deviceBox"></div>
+    <button onclick="addDevice()">添加仪器</button>
+</div>
+
+<script>
+let devices = [
+    { title: "同步辐射光源", content: "微观物质观测，多学科基础研究平台", core: true },
+    { title: "核聚变实验装置", content: "可控核聚变等离子体约束实验", core: false }
+];
+
+function showDevice() {
+    let html = "";
+    for(let i=0; i<devices.length; i++){
+        let d = devices[i];
+        let cls = d.core ? "core-device" : "";
+        html += `<div class="device-item">
+            <h3 class="${cls}">${d.title}</h3>
+            <p>${d.content}</p>
+            <button onclick="switchCore(${i})">切换核心仪器</button>
+        </div>`;
+    }
+    document.getElementById("deviceBox").innerHTML = html;
+}
+
+function switchCore(index) {
+    devices[index].core = !devices[index].core;
+    showDevice();
+}
+
+function addDevice() {
+    let devName = prompt("仪器名称：");
+    let devDesc = prompt("仪器用途与参数：");
+    devices.push({title: devName, content: devDesc, core: false});
+    showDevice();
+}
+showDevice();
+</script>
+</body>
+</html>
