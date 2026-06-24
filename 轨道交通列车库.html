@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>列车车辆库</title>
+<style>
+.container { width: 500px; margin: 0 auto; border: 2px solid #333; padding: 20px; text-align: center; }
+.train-item { margin: 10px 0; padding: 10px; border: 1px solid #ccc; text-align: left; }
+.key-train { color: red; font-weight: bold; }
+button { margin: 5px; padding: 5px 10px; }
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>轨道交通列车</h1>
+    <div id="trainList"></div>
+    <button onclick="addTrain()">新增列车</button>
+</div>
+
+<script>
+let trains = [
+    { title: "复兴号CR450", content: "试验时速450km，运营时速350km", key: true },
+    { title: "高原复兴号", content: "适配高海拔低氧环境，青藏铁路专用", key: false }
+];
+
+function drawTrain() {
+    let html = "";
+    for(let i=0; i<trains.length; i++){
+        let t = trains[i];
+        let cls = t.key ? "key-train" : "";
+        html += `<div class="train-item">
+            <h3 class="${cls}">${t.title}</h3>
+            <p>${t.content}</p>
+            <button onclick="toggleKey(${i})">切换重点车型</button>
+        </div>`;
+    }
+    document.getElementById("trainList").innerHTML = html;
+}
+
+function toggleKey(i) {
+    trains[i].key = !trains[i].key;
+    drawTrain();
+}
+
+function addTrain() {
+    let name = prompt("列车型号：");
+    let info = prompt("列车性能描述：");
+    trains.push({title: name, content: info, key: false});
+    drawTrain();
+}
+drawTrain();
+</script>
+</body>
+</html>
