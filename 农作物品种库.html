@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>农作物品种库</title>
+<style>
+.container { width: 500px; margin: 0 auto; border: 2px solid #333; padding: 20px; text-align: center; }
+.crop-item { margin: 10px 0; padding: 10px; border: 1px solid #ccc; text-align: left; }
+.core-crop { color: red; font-weight: bold; }
+button { margin: 5px; padding: 5px 10px; }
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>农作物品种对象</h1>
+    <div id="cropList"></div>
+    <button onclick="addCrop()">新增农作物</button>
+</div>
+
+<script>
+let cropData = [
+    { title: "超级杂交水稻", content: "亩产超1100公斤，耐盐碱，稳产高产", core: true },
+    { title: "国产抗虫棉花", content: "自带抗虫基因，减少农药使用，纤维优质", core: false }
+];
+
+function renderCrop() {
+    let html = "";
+    for(let i = 0; i < cropData.length; i++) {
+        let item = cropData[i];
+        let cls = item.core ? "core-crop" : "";
+        html += `<div class="crop-item">
+            <h3 class="${cls}">${item.title}</h3>
+            <p>${item.content}</p>
+            <button onclick="toggleCore(${i})">切换核心品种</button>
+        </div>`;
+    }
+    document.getElementById("cropList").innerHTML = html;
+}
+
+function toggleCore(index) {
+    cropData[index].core = !cropData[index].core;
+    renderCrop();
+}
+
+function addCrop() {
+    let title = prompt("作物品种名称：");
+    let content = prompt("作物特性与产量介绍：");
+    cropData.push({ title, content, core: false });
+    renderCrop();
+}
+renderCrop();
+</script>
+</body>
+</html>
