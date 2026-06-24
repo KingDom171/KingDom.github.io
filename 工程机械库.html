@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>工程机械库</title>
+<style>
+.container { width: 500px; margin: 0 auto; border: 2px solid #333; padding: 20px; text-align: center; }
+.machine-item { margin: 10px 0; padding: 10px; border: 1px solid #ccc; text-align: left; }
+.important-machine { color: red; font-weight: bold; }
+button { margin: 5px; padding: 5px 10px; }
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>工程机械设备</h1>
+    <div id="machineWrap"></div>
+    <button onclick="addMachine()">添加设备</button>
+</div>
+
+<script>
+let machines = [
+    { title: "大型盾构机", content: "隧道掘进，直径16米，日均掘进20米", important: true },
+    { title: "重型起重机", content: "最大起吊1200吨，基建吊装专用", important: false }
+];
+
+function renderMachine() {
+    let html = "";
+    for(let i=0; i<machines.length; i++){
+        let m = machines[i];
+        let cls = m.important ? "important-machine" : "";
+        html += `<div class="machine-item">
+            <h3 class="${cls}">${m.title}</h3>
+            <p>${m.content}</p>
+            <button onclick="switchImportant(${i})">切换重点设备</button>
+        </div>`;
+    }
+    document.getElementById("machineWrap").innerHTML = html;
+}
+
+function switchImportant(idx) {
+    machines[idx].important = !machines[idx].important;
+    renderMachine();
+}
+
+function addMachine() {
+    let t = prompt("设备名称：");
+    let c = prompt("设备功能参数：");
+    machines.push({title: t, content: c, important: false});
+    renderMachine();
+}
+renderMachine();
+</script>
+</body>
+</html>
